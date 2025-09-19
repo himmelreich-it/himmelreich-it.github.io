@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oskar Himmelreich - AI Engineer & Software Architect</title>
+    <style>
+        :root {
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #141922;
+            --bg-card: #1a1f2e;
+            --text-primary: #e4e6eb;
+            --text-secondary: #a8b2d1;
+            --text-muted: #64748b;
+            --accent: #60a5fa;
+            --accent-dim: #3b82f6;
+            --border: #2d3748;
+            --code-bg: #0f1419;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header Section */
+        header {
+            text-align: center;
+            padding: 3rem 0 2rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .title {
+            color: var(--text-secondary);
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            font-size: 0.95rem;
+        }
+
+        .contact-info a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .contact-info a:hover {
+            color: var(--accent-dim);
+        }
+
+        .contact-info span {
+            color: var(--text-muted);
+        }
+
+        /* Section Styles */
+        section {
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-text {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        /* Experience Cards */
+        .experience-item {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .company-role {
+            flex: 1;
+        }
+
+        .company-name {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        .role {
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .date-location {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-align: right;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .skill-category {
+            background: var(--bg-card);
+            padding: 1.25rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .skill-category h3 {
+            color: var(--accent);
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            border: 1px solid var(--border);
+        }
+
+        /* Technologies */
+        .tech-stack {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 0.75rem;
+            font-style: italic;
+        }
+
+        /* Links */
+        .project-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .project-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .experience-header {
+                flex-direction: column;
+            }
+
+            .date-location {
+                text-align: left;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+
+            .container {
+                max-width: 100%;
+            }
+
+            a {
+                color: black;
+                text-decoration: underline;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>OSKAR HIMMELREICH</h1>
+            <div class="title">AI Engineer & Software Architect</div>
+            <div class="contact-info">
+                <span>Amsterdam, The Netherlands</span>
+                <span>•</span>
+                <a href="mailto:ohimmelreich@pm.me">ohimmelreich@pm.me</a>
+                <span>•</span>
+                <a href="https://himmelreich.dev">himmelreich.dev</a>
+                <span>•</span>
+                <a href="https://github.com/himmelreich-it">github.com/himmelreich-it</a>
+            </div>
+        </header>
+
+        <section>
+            <h2>PROFILE</h2>
+            <p class="profile-text">
+                AI Engineer and Software Architect with 20+ years of experience, focused on AI-augmented development and LLM integration. T-shaped professional who bridges traditional software engineering excellence with modern AI capabilities, in order to accelerate development cycles and deliver production-ready solutions through Agentic AI coding practices.
+            </p>
+        </section>
+
+        <section>
+            <h2>CURRENT AI PROJECTS & FOCUS</h2>
+            <div class="experience-item">
+                <h3>Intelligent Data Query Systems</h3>
+                <div class="subtitle">2025 - Present</div>
+                <p style="color: var(--text-secondary); margin-top: 0.5rem;">Researching and building solutions (MCP, RAG) to enable natural language querying of customer data in Juakali platform</p>
+            </div>
+            <div class="experience-item">
+                <h3>Receipt Analysis Tool</h3>
+                <div class="subtitle">2025 - Present</div>
+                <p style="color: var(--text-secondary); margin-top: 0.5rem;">
+                    Open-source Agentic coding project using Anthropic for intelligent receipt scanning
+                    <br>
+                    <a href="https://github.com/himmelreich-it/scan-receipts" class="project-link">github.com/himmelreich-it/scan-receipts</a>
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>TECHNICAL EXPERTISE</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>AI/LLM Tools</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Claude Code</span>
+                        <span class="skill-tag">Anthropic API</span>
+                        <span class="skill-tag">OpenAI</span>
+                        <span class="skill-tag">Ollama</span>
+                        <span class="skill-tag">MCP</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Languages</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">C#/.NET</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">TypeScript</span>
+                        <span class="skill-tag">SQL</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Data Platforms</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">BigQuery</span>
+                        <span class="skill-tag">Neo4J</span>
+                        <span class="skill-tag">PostgreSQL</span>
+                        <span class="skill-tag">Firestore</span>
+                        <span class="skill-tag">MySQL</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Cloud & DevOps</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Google Cloud</span>
+                        <span class="skill-tag">Kubernetes</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Pulumi</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>PROFESSIONAL EXPERIENCE</h2>
+            
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div class="company-role">
+                        <div class="company-name">Freelance AI Engineer & Software Architect</div>
+                        <div class="role">Self-Employed</div>
+                    </div>
+                    <div class="date-location">
+                        <div>Amsterdam</div>
+                        <div>2021 - Present</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div class="company-role">
+                        <div class="company-name">citizenM Hotels</div>
+                        <div class="role">Technical Consultant & Performance Engineer</div>
+                    </div>
+                    <div class="date-location">2022 - 2025</div>
+                </div>
+                <ul>
+                    <li>Reduced server infrastructure by 80% (20 to 4 servers) through performance optimization</li>
+                    <li>Prevented website outages during traffic spikes, ensuring 100% uptime during major campaigns</li>
+                    <li>Delivered AI/Jupyter workshop and designed GDPR compliance architecture</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div class="company-role">
+                        <div class="company-name">Veracity Labs</div>
+                        <div class="role">AI Engineering</div>
+                    </div>
+                    <div class="date-location">2023 - 2024</div>
+                </div>
+                <ul>
+                    <li>Architected AI-powered web analysis platform combating misinformation using LLM-based content analysis</li>
+                    <li>Built Python/Scrapy scrapers integrated with OpenAI for intelligent page classification</li>
+                    <li>Created BigQuery data pipelines processing thousands of web sources for desinformation likelihood scoring</li>
+                </ul>
+                <div class="tech-stack">Technologies: Python, OpenAI API, Scrapy, BigQuery, Neo4J</div>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div class="company-role">
+                        <div class="company-name">Wayfair</div>
+                        <div class="role">Development Team Lead</div>
+                    </div>
+                    <div class="date-location">2021 - 2022</div>
+                </div>
+                <ul>
+                    <li>Led technical development of intelligent route optimization system for large parcel delivery</li>
+                    <li>Delivered production system in weeks, processing thousands of packages daily with capacity for millions of messages</li>
+                    <li>Designed graph-based routing representation in Neo4J reducing truck overloading and improving delivery accuracy</li>
+                </ul>
+                <div class="tech-stack">Technologies: Java, Neo4J, Spring Boot, PostgreSQL, Kafka</div>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div class="company-role">
+                        <div class="company-name">Juakali</div>
+                        <div class="role">Co-Founder & CTO</div>
+                    </div>
+                    <div class="date-location">
+                        <div>Amsterdam</div>
+                        <div>2018 - 2020</div>
+                    </div>
+                </div>
+                <ul>
+                    <li>Architected cloud-native platform digitizing microfinance operations</li>
+                    <li>Built multi-tenant microservices architecture on Google Cloud Platform</li>
+                    <li>Designed event-driven system using BPMN for process automation</li>
+                </ul>
+                <div class="tech-stack">Technologies: Java Spring Boot, PostgreSQL, Firestore, Cloud Pub/Sub, React</div>
+            </div>
+        </section>
+
+        <section>
+            <h2>EDUCATION & CERTIFICATIONS</h2>
+            <div class="experience-item">
+                <ul>
+                    <li><strong>MSc Psychology</strong> - University of Amsterdam (2008)</li>
+                    <li><strong>Spring Professional</strong> - VMware (2021)</li>
+                    <li><strong>Google Cloud Architecture</strong> (2020)</li>
+                    <li><strong>Professional Scrum Master I</strong> (2018)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>LANGUAGES</h2>
+            <div class="experience-item">
+                <p style="color: var(--text-secondary);">Dutch (Native) • English (Fluent)</p>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
