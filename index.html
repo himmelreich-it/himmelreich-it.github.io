@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oskar Himmelreich - CV</title>
+    <style>
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --text-primary: #c9d1d9;
+            --text-secondary: #8b949e;
+            --accent: #58a6ff;
+            --border: #30363d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--accent);
+            font-size: 1.3em;
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            color: var(--text-secondary);
+            font-size: 0.95em;
+        }
+
+        .contact-info a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: var(--bg-secondary);
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+
+        section h2 {
+            color: var(--accent);
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        section h3 {
+            color: var(--text-primary);
+            font-size: 1.2em;
+            margin: 20px 0 10px 0;
+        }
+
+        section h4 {
+            color: var(--text-primary);
+            font-size: 1.1em;
+            margin: 15px 0 10px 0;
+        }
+
+        section p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        section ul ul {
+            margin-left: 40px;
+            margin-top: 10px;
+            padding-left: 20px;
+            border-left: 2px solid var(--border);
+        }
+
+        /* Style for company projects under freelance */
+        .company-project {
+            margin-left: 30px;
+            padding-left: 20px;
+            border-left: 3px solid var(--border);
+            margin-top: 25px;
+            margin-bottom: 20px;
+        }
+
+        .company-project > p:first-child strong {
+            color: var(--accent);
+            font-size: 1.1em;
+        }
+
+        section li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        section em {
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        section strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        section hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 20px 0;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+        }
+
+        .error {
+            background-color: #3d1519;
+            border-color: #822025;
+            color: #ff7b72;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header id="header">
+            <div class="loading">Loading CV...</div>
+        </header>
+
+        <main id="main-content">
+        </main>
+    </div>
+
+    <script>
+        async function loadCV() {
+            try {
+                const response = await fetch('cv-oskar-himmelreich.md');
+                if (!response.ok) {
+                    throw new Error('Failed to load CV markdown file');
+                }
+
+                const markdown = await response.text();
+
+                const lines = markdown.split('\n');
+                const sections = [];
+                let currentSection = null;
+
+                for (let i = 0; i < lines.length; i++) {
+                    const line = lines[i];
+
+                    if (line.startsWith('# ')) {
+                        if (currentSection && currentSection.content.trim()) {
+                            sections.push(currentSection);
+                        }
+                        currentSection = {
+                            type: 'header',
+                            title: line.substring(2),
+                            content: ''
+                        };
+                    } else if (line.startsWith('## ')) {
+                        if (currentSection && currentSection.content.trim()) {
+                            sections.push(currentSection);
+                        }
+                        currentSection = {
+                            type: 'section',
+                            title: line.substring(3),
+                            content: ''
+                        };
+                    } else if (currentSection) {
+                        currentSection.content += line + '\n';
+                    }
+                }
+
+                if (currentSection && currentSection.content.trim()) {
+                    sections.push(currentSection);
+                }
+
+                renderSections(sections);
+
+            } catch (error) {
+                document.getElementById('header').innerHTML = `
+                    <div class="error">
+                        Error loading CV: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        function renderSections(sections) {
+            const header = document.getElementById('header');
+            const mainContent = document.getElementById('main-content');
+
+            header.innerHTML = '';
+            mainContent.innerHTML = '';
+
+            sections.forEach(section => {
+                if (section.type === 'header') {
+                    const titleParts = section.content.split('\n').filter(line => line.trim());
+
+                    header.innerHTML = `
+                        <h1>${section.title}</h1>
+                        ${titleParts[0] && titleParts[0].includes('**') ?
+                            `<div class="subtitle">${titleParts[0].replace(/\*\*/g, '')}</div>` : ''}
+                        <div class="contact-info">
+                            ${marked.parseInline(titleParts.slice(1).join(' | '))}
+                        </div>
+                    `;
+                } else {
+                    const sectionElement = document.createElement('section');
+                    const sectionId = section.title.toLowerCase()
+                        .replace(/[^a-z0-9]+/g, '-')
+                        .replace(/^-|-$/g, '');
+
+                    sectionElement.id = sectionId;
+
+                    let content = section.content;
+
+                    if (!content.includes('###') && !content.includes('####')) {
+                        content = '## ' + section.title + '\n' + content;
+                    } else {
+                        sectionElement.innerHTML = `<h2>${section.title}</h2>`;
+                        content = content.trim();
+                    }
+
+                    let parsedContent = marked.parse(content);
+
+                    // Wrap company sections under Professional Experience
+                    if (section.title === 'PROFESSIONAL EXPERIENCE') {
+                        // Find patterns like **CompanyName** followed by content and wrap them
+                        parsedContent = parsedContent.replace(
+                            /(<p><strong>[^<]+<\/strong>[^<]*(?:<\/p>\s*)?(?:<ul>[\s\S]*?<\/ul>)?)/g,
+                            '<div class="company-project">$1</div>'
+                        );
+                    }
+
+                    if (sectionElement.innerHTML) {
+                        sectionElement.innerHTML += parsedContent;
+                    } else {
+                        sectionElement.innerHTML = parsedContent;
+                    }
+
+                    mainContent.appendChild(sectionElement);
+                }
+            });
+        }
+
+        loadCV();
+    </script>
+</body>
+</html>
